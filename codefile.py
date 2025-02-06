@@ -70,9 +70,19 @@ if calculate_button and income1 > 0 and income2 > 0 and expenses > 0:
     st.markdown(f"<h3 style='color: #2f4f4f;'>You make {percent1:.2f}% of your household income</h3>", unsafe_allow_html=True)
     st.markdown(f"<h3 style='color: #2f4f4f;'>Your partner makes {percent2:.2f}% of your household income</h3>", unsafe_allow_html=True)
 
+    # Horizontal Radio Buttons using HTML and CSS
+    st.markdown("""
+        <style>
+            .stRadio label {
+                display: inline-block;
+                margin-right: 10px;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
     # Radio buttons for split options
     option = st.radio("How would you like to split your expenses?", 
-                      ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'))
+                      ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'), key="split_option")
 
     if option == '50/50 split':
         share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
@@ -110,4 +120,5 @@ if calculate_button and income1 > 0 and income2 > 0 and expenses > 0:
             st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share2:.2f}</span>.</p>", unsafe_allow_html=True)
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
+
 
