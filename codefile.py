@@ -17,8 +17,8 @@ def calculate_50_50(expenses, income1, income2):
 def calculate_complete_share(expenses, income1, income2):
     total_income = income1 + income2
     total_percent = (expenses / total_income) * 100
-    expense1 = (income1*total_percent)
-    expense2 = (income2*total_percent)
+    expense1 = (income1*total_percent/100)
+    expense2 = (income2*total_percent/100)
     remaining = (total_income - expenses) / 2
     return total_percent, remaining, expense1, expense2
 
