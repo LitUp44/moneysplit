@@ -41,11 +41,13 @@ def calculate_split_by_bills(bills, income1, income2):
     bill_share1 = sum([bill[1] for bill in bills if bill[2] == 'Person 1'])
     bill_share2 = sum([bill[1] for bill in bills if bill[2] == 'Person 2'])
     
-    percent1 = (bill_share1 / total_income) * 100
-    percent2 = (bill_share2 / total_income) * 100
+    percent1 = (bill_share1 / income1) * 100
+    percent2 = (bill_share2 / income2) * 100
+    bill1 = (bill_share1 / total_bills)
+    bill2 = (bill_share2 / total_bills)
     remaining1 = income1 - bill_share1
     remaining2 = income2 - bill_share2
-    return percent1, percent2, remaining1, remaining2
+    return percent1, percent2, remaining1, remaining2, bill1, bill2
 
 # Streamlit interface
 st.title('How should you split your finances?')
@@ -97,7 +99,7 @@ elif option == 'Split by bills':
 
     # Calculate the split by bills
     if bills:
-        percent1, percent2, remaining1, remaining2 = calculate_split_by_bills(bills, income1, income2)
-        st.write(f"Person 1 pays {percent1:.2f}% of their income for bills, leaving ${remaining1:.2f} after bills.")
-        st.write(f"Person 2 pays {percent2:.2f}% of their income for bills, leaving ${remaining2:.2f} after bills.")
+        percent1, percent2, remaining1, remaining2, bill1, bill2 = calculate_split_by_bills(bills, income1, income2)
+        st.write(f"Person 1 pays {percent1:.2f}% of their income for bills, leaving ${remaining1:.2f} after bills. They pay ${bill1:.2f} total.")
+        st.write(f"Person 2 pays {percent2:.2f}% of their income for bills, leaving ${remaining2:.2f} after bills. They pay ${bill2:.2f} total.")
 
