@@ -75,7 +75,7 @@ if option == '50/50 split':
 elif option == 'Complete share':
     total_percent, remaining = calculate_complete_share(expenses, income1, income2)
     st.write(f"Each person pays {total_percent:.2f}% of their income for all expenses.")
-    st.write(f"You both have ${remaining:.2f} left after expenses.")
+    st.write(f"You each have ${remaining:.2f} left after expenses.")
 
 elif option == 'Proportional expenses':
     percent1, percent2, expense1, expense2, remaining1, remaining2 = calculate_proportional_expenses(expenses, income1, income2)
