@@ -1,1 +1,1 @@
-st as streamlit
+streamlit as st
