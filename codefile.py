@@ -19,21 +19,19 @@ def calculate_50_50(expenses, income1, income2):
 def calculate_complete_share(expenses, income1, income2):
     total_income = income1 + income2
     total_percent = (expenses / total_income) * 100
-    #remaining1 = income1 - (expenses / 2)
-    #remaining2 = income2 - (expenses / 2)
     remaining = (total_income - expenses) / 2
     return total_percent, remaining
 
 # Function to calculate proportional expenses
 def calculate_proportional_expenses(expenses, income1, income2):
     total_income = income1 + income2
-    percent1 = (income1 / total_income) * 100
-    percent2 = (income2 / total_income) * 100
-    expense1 = (expenses * percent1) / 100
-    expense2 = (expenses * percent2) / 100
+    total_percent = (expenses / total_income) * 100
+    #percent1 = (income1 / total_income) * 100
+    #percent2 = (income2 / total_income) * 100
+    expense_total = (expenses * total_percent) / 100
     remaining1 = income1 - expense1
-    remaining2 = income2 - expense2
-    return percent1, percent2, expense1, expense2, remaining1, remaining2
+    remaining2 = income2 - expense1
+    return percent1, percent2, expense_total, remaining1, remaining2
 
 # Function to calculate split by bills
 def calculate_split_by_bills(bills, income1, income2):
@@ -78,9 +76,8 @@ elif option == 'Complete share':
     st.write(f"You each have ${remaining:.2f} left after expenses.")
 
 elif option == 'Proportional expenses':
-    percent1, percent2, expense1, expense2, remaining1, remaining2 = calculate_proportional_expenses(expenses, income1, income2)
-    st.write(f"Person 1 pays {percent1:.2f}% of their income, which equals ${expense1:.2f}.")
-    st.write(f"Person 2 pays {percent2:.2f}% of their income, which equals ${expense2:.2f}.")
+    percent1, percent2, expense1, remaining1, remaining2 = calculate_proportional_expenses(expenses, income1, income2)
+    st.write(f"You both pay {percent1:.2f}% of your income to expenses, ${expense1:.2f}.")
     st.write(f"Person 1 has ${remaining1:.2f} left after expenses.")
     st.write(f"Person 2 has ${remaining2:.2f} left after expenses.")
 
