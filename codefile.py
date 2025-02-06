@@ -19,9 +19,10 @@ def calculate_50_50(expenses, income1, income2):
 def calculate_complete_share(expenses, income1, income2):
     total_income = income1 + income2
     total_percent = (expenses / total_income) * 100
-    remaining1 = income1 - (expenses / 2)
-    remaining2 = income2 - (expenses / 2)
-    return total_percent, remaining1, remaining2
+    #remaining1 = income1 - (expenses / 2)
+    #remaining2 = income2 - (expenses / 2)
+    remaining = (total_income - expenses) / 2
+    return total_percent, remaining
 
 # Function to calculate proportional expenses
 def calculate_proportional_expenses(expenses, income1, income2):
@@ -72,10 +73,9 @@ if option == '50/50 split':
     st.write(f"Person 2 pays {percent2:.2f}% of their income, leaving ${remaining2:.2f} after expenses.")
 
 elif option == 'Complete share':
-    total_percent, remaining1, remaining2 = calculate_complete_share(expenses, income1, income2)
+    total_percent, remaining = calculate_complete_share(expenses, income1, income2)
     st.write(f"Each person pays {total_percent:.2f}% of their income for all expenses.")
-    st.write(f"Person 1 has ${remaining1:.2f} left after expenses.")
-    st.write(f"Person 2 has ${remaining2:.2f} left after expenses.")
+    st.write(f"You both have ${remaining:.2f} left after expenses.")
 
 elif option == 'Proportional expenses':
     percent1, percent2, expense1, expense2, remaining1, remaining2 = calculate_proportional_expenses(expenses, income1, income2)
