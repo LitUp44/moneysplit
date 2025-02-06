@@ -6,7 +6,6 @@ def calculate_percentage_earnings(income1, income2):
     percent2 = (income2 / total_income) * 100
     return percent1, percent2
 
-# Function to calculate 50/50 split
 def calculate_50_50(expenses, income1, income2):
     share = expenses / 2
     percent1 = (share / income1) * 100
@@ -15,26 +14,23 @@ def calculate_50_50(expenses, income1, income2):
     remaining2 = income2 - share
     return share, percent1, percent2, remaining1, remaining2
 
-# Function to calculate complete share
 def calculate_complete_share(expenses, income1, income2):
     total_income = income1 + income2
     total_percent = (expenses / total_income) * 100
     remaining = (total_income - expenses) / 2
     return total_percent, remaining
 
-# Function to calculate proportional expenses
 def calculate_proportional_expenses(expenses, income1, income2):
     total_income = income1 + income2
     total_percent = (expenses / total_income) * 100
     percent1 = (income1 / total_income) * 100
     percent2 = (income2 / total_income) * 100
-    expense1 = (percent1/100*expenses)
-    expense2 = (percent2/100*expenses)
+    expense1 = (percent1 / 100 * expenses)
+    expense2 = (percent2 / 100 * expenses)
     remaining1 = income1 - expense1
     remaining2 = income2 - expense2
     return percent1, percent2, remaining1, remaining2, expense1, expense2
 
-# Function to calculate split by bills
 def calculate_split_by_bills(bills, income1, income2):
     total_expenses = sum([bill[1] for bill in bills])
     total_income = income1 + income2
@@ -43,14 +39,20 @@ def calculate_split_by_bills(bills, income1, income2):
     total_bills = bill_share1 + bill_share2
     percent1 = (bill_share1 / income1) * 100
     percent2 = (bill_share2 / income2) * 100
-    #bill1 = (bill_share1 / total_bills)
-    #bill2 = (bill_share2 / total_bills)
     remaining1 = income1 - bill_share1
     remaining2 = income2 - bill_share2
     return percent1, percent2, remaining1, remaining2, bill_share1, bill_share2
 
+def app_header():
+    st.image("Aligned White.png", width=200)  # Adjust image path as needed
+    st.markdown("""
+        <div style="background-color: #f5724b; padding: 10px; text-align: center; border-radius: 8px;">
+            <h1 style="color: #ffeae6; margin: 0;">How should you split your finances?</h1>
+        </div>
+    """, unsafe_allow_html=True)
+
 # Streamlit interface
-st.title('How should you split your finances?')
+app_header()
 
 st.markdown("Use this tool to help you decide how to split your finances with your partner. Enter your details below.")
 
@@ -60,8 +62,8 @@ income2 = st.number_input("Enter your partner's post-tax income", min_value=0.0,
 expenses = st.number_input("Enter your average monthly expenses", min_value=0.0, value=0.0)
 
 percent1, percent2 = calculate_percentage_earnings(income1, income2)
-st.write(f"You make {percent1:.2f}% of your household income")
-st.write(f"Your partner makes {percent2:.2f}% of your household income")
+st.markdown(f"<h3 style='color: #2f4f4f;'>You make {percent1:.2f}% of your household income</h3>", unsafe_allow_html=True)
+st.markdown(f"<h3 style='color: #2f4f4f;'>Your partner makes {percent2:.2f}% of your household income</h3>", unsafe_allow_html=True)
 
 # Radio buttons for split options
 option = st.radio("How would you like to split your expenses?", 
@@ -69,21 +71,21 @@ option = st.radio("How would you like to split your expenses?",
 
 if option == '50/50 split':
     share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
-    st.write(f"Each person pays: ${share:.2f}")
-    st.write(f"Person 1 pays {percent1:.2f}% of their income, leaving ${remaining1:.2f} after expenses.")
-    st.write(f"Person 2 pays {percent2:.2f}% of their income, leaving ${remaining2:.2f} after expenses.")
+    st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: ${share:.2f}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<p><strong>Person 1</strong> pays <span style='color: #228b22;'>{percent1:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining1:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
 
 elif option == 'Complete share':
     total_percent, remaining = calculate_complete_share(expenses, income1, income2)
-    st.write(f"Each person pays {total_percent:.2f}% of their income for all expenses.")
-    st.write(f"You each have ${remaining:.2f} left after expenses.")
+    st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: {total_percent:.2f}% of their income for all expenses.</h3>", unsafe_allow_html=True)
+    st.markdown(f"<p>You each have <span style='color: #228b22;'>${remaining:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
 
 elif option == 'Proportional expenses':
     percent1, percent2, remaining1, remaining2, expense1, expense2 = calculate_proportional_expenses(expenses, income1, income2)
-    st.write(f"You pay {percent1:.2f}% of the expenses, ${expense1:.2f}.")
-    st.write(f"Your partner pays {percent2:.2f}% of the expenses, ${expense2:.2f}.")
-    st.write(f"Person 1 has ${remaining1:.2f} left after expenses.")
-    st.write(f"Person 2 has ${remaining2:.2f} left after expenses.")
+    st.markdown(f"<h3 style='color: #f5724b;'>You pay: {percent1:.2f}% of the expenses, ${expense1:.2f}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='color: #f5724b;'>Your partner pays: {percent2:.2f}% of the expenses, ${expense2:.2f}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<p><strong>Person 1</strong> has <span style='color: #228b22;'>${remaining1:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p><strong>Person 2</strong> has <span style='color: #228b22;'>${remaining2:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
 
 elif option == 'Split by bills':
     # Collect bills input from the user
@@ -97,9 +99,9 @@ elif option == 'Split by bills':
         person = st.selectbox(f"Who pays for bill {i+1}?", ['Person 1', 'Person 2'], key=i)
         bills.append((bill_name, bill_amount, person))
 
-    # Calculate the split by bills
     if bills:
         percent1, percent2, remaining1, remaining2, bill_share1, bill_share2 = calculate_split_by_bills(bills, income1, income2)
-        st.write(f"Person 1 pays {percent1:.2f}% of their income for bills, leaving ${remaining1:.2f} after bills. They pay ${bill_share1:.2f} total.")
-        st.write(f"Person 2 pays {percent2:.2f}% of their income for bills, leaving ${remaining2:.2f} after bills. They pay ${bill_share2:.2f} total.")
+        st.markdown(f"<p><strong>Person 1</strong> pays <span style='color: #228b22;'>{percent1:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining1:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share1:.2f}</span>.</p>", unsafe_allow_html=True)
+        st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share2:.2f}</span>.</p>", unsafe_allow_html=True)
+
 
