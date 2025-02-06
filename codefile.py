@@ -1,6 +1,6 @@
 import streamlit as st
 
-def calculate_percentage_earnings(income1, income2)
+def calculate_percentage_earnings(income1, income2):
     total_income = income1 + income2
     percent1 = (income1 / total_income) * 100
     percent2 = (income2 / total_income) * 100
