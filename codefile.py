@@ -40,7 +40,7 @@ def calculate_split_by_bills(bills, income1, income2):
     total_income = income1 + income2
     bill_share1 = sum([bill[1] for bill in bills if bill[2] == 'Person 1'])
     bill_share2 = sum([bill[1] for bill in bills if bill[2] == 'Person 2'])
-    
+    total_bills = bill_share1 + bill_share2
     percent1 = (bill_share1 / income1) * 100
     percent2 = (bill_share2 / income2) * 100
     bill1 = (bill_share1 / total_bills)
