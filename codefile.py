@@ -61,45 +61,53 @@ income1 = st.number_input("Enter your post-tax income", min_value=0.0, value=0.0
 income2 = st.number_input("Enter your partner's post-tax income", min_value=0.0, value=0.0)
 expenses = st.number_input("Enter your average monthly expenses", min_value=0.0, value=0.0)
 
-percent1, percent2 = calculate_percentage_earnings(income1, income2)
-st.markdown(f"<h3 style='color: #2f4f4f;'>You make {percent1:.2f}% of your household income</h3>", unsafe_allow_html=True)
-st.markdown(f"<h3 style='color: #2f4f4f;'>Your partner makes {percent2:.2f}% of your household income</h3>", unsafe_allow_html=True)
+# Calculate Button
+calculate_button = st.button("Calculate")
 
-# Radio buttons for split options
-option = st.radio("How would you like to split your expenses?", 
-                  ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'))
+# Only proceed with calculations if the button is clicked and inputs are valid
+if calculate_button and income1 > 0 and income2 > 0 and expenses > 0:
+    percent1, percent2 = calculate_percentage_earnings(income1, income2)
+    st.markdown(f"<h3 style='color: #2f4f4f;'>You make {percent1:.2f}% of your household income</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='color: #2f4f4f;'>Your partner makes {percent2:.2f}% of your household income</h3>", unsafe_allow_html=True)
 
-if option == '50/50 split':
-    share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
-    st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: ${share:.2f}</h3>", unsafe_allow_html=True)
-    st.markdown(f"<p><strong>Person 1</strong> pays <span style='color: #228b22;'>{percent1:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining1:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
-    st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
+    # Radio buttons for split options
+    option = st.radio("How would you like to split your expenses?", 
+                      ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'))
 
-elif option == 'Complete share':
-    total_percent, remaining = calculate_complete_share(expenses, income1, income2)
-    st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: {total_percent:.2f}% of their income for all expenses.</h3>", unsafe_allow_html=True)
-    st.markdown(f"<p>You each have <span style='color: #228b22;'>${remaining:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
+    if option == '50/50 split':
+        share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
+        st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: ${share:.2f}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p><strong>Person 1</strong> pays <span style='color: #228b22;'>{percent1:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining1:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
+        st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
 
-elif option == 'Proportional expenses':
-    percent1, percent2, remaining1, remaining2, expense1, expense2 = calculate_proportional_expenses(expenses, income1, income2)
-    st.markdown(f"<h3 style='color: #f5724b;'>You pay: {percent1:.2f}% of the expenses, ${expense1:.2f}</h3>", unsafe_allow_html=True)
-    st.markdown(f"<h3 style='color: #f5724b;'>Your partner pays: {percent2:.2f}% of the expenses, ${expense2:.2f}</h3>", unsafe_allow_html=True)
-    st.markdown(f"<p><strong>Person 1</strong> has <span style='color: #228b22;'>${remaining1:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
-    st.markdown(f"<p><strong>Person 2</strong> has <span style='color: #228b22;'>${remaining2:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
+    elif option == 'Complete share':
+        total_percent, remaining = calculate_complete_share(expenses, income1, income2)
+        st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: {total_percent:.2f}% of their income for all expenses.</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p>You each have <span style='color: #228b22;'>${remaining:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
 
-elif option == 'Split by bills':
-    # Collect bills input from the user
-    st.write("Enter the bills you want to split.")
-    bills = []
-    num_bills = st.number_input("How many bills do you want to enter?", min_value=1, step=1)
+    elif option == 'Proportional expenses':
+        percent1, percent2, remaining1, remaining2, expense1, expense2 = calculate_proportional_expenses(expenses, income1, income2)
+        st.markdown(f"<h3 style='color: #f5724b;'>You pay: {percent1:.2f}% of the expenses, ${expense1:.2f}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color: #f5724b;'>Your partner pays: {percent2:.2f}% of the expenses, ${expense2:.2f}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p><strong>Person 1</strong> has <span style='color: #228b22;'>${remaining1:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
+        st.markdown(f"<p><strong>Person 2</strong> has <span style='color: #228b22;'>${remaining2:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
 
-    for i in range(num_bills):
-        bill_name = st.text_input(f"Enter bill name {i+1}")
-        bill_amount = st.number_input(f"Enter amount for bill {i+1}")
-        person = st.selectbox(f"Who pays for bill {i+1}?", ['Person 1', 'Person 2'], key=i)
-        bills.append((bill_name, bill_amount, person))
+    elif option == 'Split by bills':
+        # Collect bills input from the user
+        st.write("Enter the bills you want to split.")
+        bills = []
+        num_bills = st.number_input("How many bills do you want to enter?", min_value=1, step=1)
 
-    if bills:
-        percent1, percent2, remaining1, remaining2, bill_share1, bill_share2 = calculate_split_by_bills(bills, income1, income2)
-        st.markdown(f"<p><strong>Person 1</strong> pays <span style='color: #228b22;'>{percent1:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining1:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share1:.2f}</span>.</p>", unsafe_allow_html=True)
-        st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share2:.2f}</span>.</p>", unsafe_allow_html=True)
+        for i in range(num_bills):
+            bill_name = st.text_input(f"Enter bill name {i+1}")
+            bill_amount = st.number_input(f"Enter amount for bill {i+1}")
+            person = st.selectbox(f"Who pays for bill {i+1}?", ['Person 1', 'Person 2'], key=i)
+            bills.append((bill_name, bill_amount, person))
+
+        if bills:
+            percent1, percent2, remaining1, remaining2, bill_share1, bill_share2 = calculate_split_by_bills(bills, income1, income2)
+            st.markdown(f"<p><strong>Person 1</strong> pays <span style='color: #228b22;'>{percent1:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining1:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share1:.2f}</span>.</p>", unsafe_allow_html=True)
+            st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share2:.2f}</span>.</p>", unsafe_allow_html=True)
+else:
+    st.warning("Please fill in all fields and click 'Calculate' to see the results.")
+
