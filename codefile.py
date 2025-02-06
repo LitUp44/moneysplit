@@ -17,8 +17,10 @@ def calculate_50_50(expenses, income1, income2):
 def calculate_complete_share(expenses, income1, income2):
     total_income = income1 + income2
     total_percent = (expenses / total_income) * 100
+    expenses1 = (income1*total_percent)
+    expenses2 = (income2*total_percent)
     remaining = (total_income - expenses) / 2
-    return total_percent, remaining
+    return total_percent, remaining, expenses1, expenses2
 
 def calculate_proportional_expenses(expenses, income1, income2):
     total_income = income1 + income2
@@ -99,8 +101,9 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
         st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
 
     elif option == 'Complete share':
-        total_percent, remaining = calculate_complete_share(expenses, income1, income2)
+        total_percent, remaining = calculate_complete_share(expenses, income1, income2, expense1, expense2)
         st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: {total_percent:.2f}% of their income for all expenses.</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p>You will pay <span style='color: #228b22;'>${expense1:.2f}</span> and your partner will pay <span style='color: #228b22;'>${expense2:.2f}</span>.</p>", unsafe_allow_html=True)
         st.markdown(f"<p>You each have <span style='color: #228b22;'>${remaining:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
 
     elif option == 'Proportional expenses':
