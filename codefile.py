@@ -1,5 +1,11 @@
 import streamlit as st
 
+def calculate_percentage_earnings(income1, income2)
+    total_income = income1 + income2
+    percent1 = (income1 / total_income) * 100
+    percent2 = (income2 / total_income) * 100
+    return percent1, percent2
+
 # Function to calculate 50/50 split
 def calculate_50_50(expenses, income1, income2):
     share = expenses / 2
@@ -42,7 +48,7 @@ def calculate_split_by_bills(bills, income1, income2):
     return percent1, percent2, remaining1, remaining2
 
 # Streamlit interface
-st.title('Couple Finance Split')
+st.title('How should you split your finances?')
 
 st.markdown("Use this tool to help you decide how to split your finances with your partner. Enter your details below.")
 
@@ -50,6 +56,10 @@ st.markdown("Use this tool to help you decide how to split your finances with yo
 income1 = st.number_input("Enter your post-tax income", min_value=0.0, value=0.0)
 income2 = st.number_input("Enter your partner's post-tax income", min_value=0.0, value=0.0)
 expenses = st.number_input("Enter your average monthly expenses", min_value=0.0, value=0.0)
+
+percent1, percent2 = calculate_percentage_earnings(income1, income2)
+st.write(f"You make {percent1:.2f}% of your household income")
+st.write(f"Your partner makes {percent2:.2f}% of your household income")
 
 # Radio buttons for split options
 option = st.radio("How would you like to split your expenses?", 
