@@ -1,1 +1,2 @@
-streamlit as st
+streamlit>=1.0.0
+plotly
