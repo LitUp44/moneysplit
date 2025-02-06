@@ -28,8 +28,8 @@ def calculate_proportional_expenses(expenses, income1, income2):
     total_percent = (expenses / total_income) * 100
     percent1 = (income1 / total_income) * 100
     percent2 = (income2 / total_income) * 100
-    expense1 = (percent1*expenses)
-    expense2 = (percent2*expenses)
+    expense1 = (percent1/100*expenses)
+    expense2 = (percent2/100*expenses)
     remaining1 = income1 - expense1
     remaining2 = income2 - expense2
     return percent1, percent2, remaining1, remaining2, expense1, expense2
