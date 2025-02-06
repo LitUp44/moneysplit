@@ -61,11 +61,23 @@ income1 = st.number_input("Enter your post-tax income", min_value=0.0, value=0.0
 income2 = st.number_input("Enter your partner's post-tax income", min_value=0.0, value=0.0)
 expenses = st.number_input("Enter your average monthly expenses", min_value=0.0, value=0.0)
 
-# Calculate Button
+# Store the radio button selection and calculations in session_state
+if "calculated" not in st.session_state:
+    st.session_state.calculated = False  # Track whether calculations were done
+
+# Radio buttons for split options
+option = st.radio("How would you like to split your expenses?", 
+                  ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'), key="split_option")
+
+# Calculate Button to trigger calculations and store the result
 calculate_button = st.button("Calculate")
 
+# Update session state on calculate button click
+if calculate_button:
+    st.session_state.calculated = True
+
 # Only proceed with calculations if the button is clicked and inputs are valid
-if calculate_button and income1 > 0 and income2 > 0 and expenses > 0:
+if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
     percent1, percent2 = calculate_percentage_earnings(income1, income2)
     st.markdown(f"<h3 style='color: #2f4f4f;'>You make {percent1:.2f}% of your household income</h3>", unsafe_allow_html=True)
     st.markdown(f"<h3 style='color: #2f4f4f;'>Your partner makes {percent2:.2f}% of your household income</h3>", unsafe_allow_html=True)
@@ -79,10 +91,6 @@ if calculate_button and income1 > 0 and income2 > 0 and expenses > 0:
             }
         </style>
     """, unsafe_allow_html=True)
-
-    # Radio buttons for split options
-    option = st.radio("How would you like to split your expenses?", 
-                      ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'), key="split_option")
 
     if option == '50/50 split':
         share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
