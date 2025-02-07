@@ -56,23 +56,17 @@ def app_header():
 # Streamlit interface
 app_header()
 st.markdown("""
-    ## How to *equitably* split money
+    ## Let's help you answer the question: How to *fairly* split money in your partnership
 
-    First of all: What’s important? 
+    There are many options for what can feel ‘fair’ for you! We’ll help you outline the options and think about what’s right for you. 
 
-    1. **Having access to your own, not scrutinised money.** This usually means your own account / credit card where you can make purchases that will not be seen by your partner. Trust is hyper important and so is being able to buy a birthday present without your partner seeing the charge. 
+    1. **50/50 split**: this is usually the first place that people start because before you’ve talked about it, it feels like the easiest thing to each pay for yourself. Usually this means you would put the same amount of money in a joint chequing account and use that for bills, date nights and vacations. 
 
-    2. **Understanding the percentage of your expenses you’re paying.** Whether that’s just bills, or all expenses. 
-
-    There are many options for what can feel ‘fair’ in your relationship! We’ll help you outline the options and choose what’s right for you. 
-
-    1. **50/50 split**: this is usually the first place that people start because when you’re not in a serious relationship, or before you’ve talked about it, it feels like the easiest thing to just each pay for yourself. Usually this means you would just put the same amount of money in a joint chequing account and use that for bills, date nights and vacations. 
-
-    It’s rare as you progress in a relationship that this is the right way forwards. It absolutely can be - if you both make enough money to afford the life you want and you don’t mind saving at different rates for the future. But the odds that you make EXACTLY the same amount of money and do the EXACT same amount of household / family work is rare.
+    It’s rare as you progress in a relationship that this is the right way forwards. It absolutely can be - if you both make enough money to afford the life you want and you don’t mind saving at different rates for the future. But this is rare, especially as life curcumstances change. (Ie. one person taking more time off to be with children, or taking a step back in their career.)
 
     So what are my other options? 
 
-    2. **Combine finances fully**  
+    2. **Combine finances equally**  
     This is my preferred method because it’s truly equal. The recommendation here is that you fully record / aggregate each person’s income - you use your shared money to pay for your joint expenses, and then you transfer out exactly the same amount of money to your individual accounts to have for personal or ‘fun’ expenses. This is your no guilt, no stress, ‘you’ money. 
 
     This is generally for partners that are married or have decided this is their ‘life partner’ because the partner who earns more needs to be comfortable that they will be dividing the excess they make with their partner. 
@@ -80,18 +74,18 @@ st.markdown("""
     The way I like to think of it - if you chose to do life with this person, wouldn’t you want them to have the same opportunities as you?
 
     3. **Split expenses and fun money proportionally**  
-    This means that you pay for your life, expenses, bills even children according to the amount you make but you also only get that percentage of ‘fun’ money. 
+    This means that you contribute to your life; expenses, bills, even children according to the amount you make but you also only get that same percentage of ‘fun’ money. 
 
-    So let’s say your partner earns $50,000 and you make $100,000. After paying for all of your bills, savings, investments etc you have $5,000 / month to split, you would get $3,333 and they would get $1,667. 
+    So let’s say your partner earns $4,000 and you make $8,000 a month. After paying for all of your bills, savings, investments etc you have $1,000 / month to split for fun money, you would get $333 and they would get $667. 
 
-    This can make sense if you’re proud of your individual achievements and want your spending power to reflect that. One caution though is that this can potentially lead to resentment over time. Having unequal access to money over the long run can be tricky in a relationship. 
+    This can make sense if you’re proud of your individual achievements and want your spending power to reflect that. One caution is that this can lead to resentment over time. Having unequal access to money in the long run can be tricky for a relationship. 
 
-    4. **Split bills & items**  
-    This is an interesting one that a lot of people fall into. They’ll start divvying up payments - you pay for the utilities and car payments, I’ll pay for the mortgage and the groceries. 
+    4. **Split bills & individual items**  
+    This is an interesting one that a lot of people fall into. They’ll start divvying up payments - "you pay for the utilities and car payments, I’ll pay for the mortgage and the groceries". 
 
-    This can work if both people are happy with the arrangement and feel that the split is roughly right according to their incomes. The challenge with this is that both expenses and incomes are prone to changing on a very consistent basis. This means that you can end up with a very different situation than the one you started with and it’s a lot of effort to be constantly renegotiating how you should be splitting everything up. 
+    This can work if both people are happy with the arrangement and feel that the split is roughly appropriate according to their incomes or beliefs. The challenge is that both expenses and incomes change on a very consistent basis. This means that you can quickly end up with a situation that looks very different than the one you started with. It’s a lot of effort to be constantly renegotiating how you should be splitting everything up. 
 
-    There are of course varieties to each of these methods! You might do 50/50 but one partner pays more for rent, for example. OR you combine expenses fully but you have a pre-nuptial agreement or investment accounts for one partner that means they would get more in case of a separation. Whatever works for you - the important part is DECIDING and not falling into a trap of just doing whatever is easiest at the time.
+    There are of course varieties to each of these methods! You might do 50/50 generally but one partner pays more for rent, for example. OR you combine expenses fully but you contribute to investment / pension accounts at different rates. Whatever works for you - the important part is DECIDING together and not falling into a trap of just doing whatever is easiest at the time.
 """)
 
 st.markdown("Enter your details below.")
