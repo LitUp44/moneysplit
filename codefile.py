@@ -76,7 +76,7 @@ st.markdown("""
     3. **Split expenses and fun money proportionally**  
     This means that you contribute to your life; expenses, bills, even children according to the amount you make but you also only get that same percentage of ‘fun’ money. 
 
-    So let’s say your partner earns $4,000 and you make $8,000 a month. After paying for all of your bills, savings, investments etc you have $1,000 / month to split for fun money, you would get $333 and they would get $667. 
+    So let’s say your partner earns 4,000 and you make 8,000 a month. After paying for all of your bills, savings, investments etc you have 1,000 / month to split for fun money, you would get $333 and they would get $667. 
 
     This can make sense if you’re proud of your individual achievements and want your spending power to reflect that. One caution is that this can lead to resentment over time. Having unequal access to money in the long run can be tricky for a relationship. 
 
@@ -93,7 +93,7 @@ st.markdown("Enter your details below.")
 # Input for incomes and expenses
 income1 = st.number_input("Enter your monthly post-tax income", min_value=0.0, value=0.0)
 income2 = st.number_input("Enter your partner's monthly post-tax income", min_value=0.0, value=0.0)
-expenses = st.number_input("Enter your average monthly expenses", min_value=0.0, value=0.0)
+expenses = st.number_input("Enter your joint average monthly expenses", min_value=0.0, value=0.0)
 
 # Store the radio button selection and calculations in session_state
 if "calculated" not in st.session_state:
