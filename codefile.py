@@ -91,8 +91,8 @@ st.markdown("""
 st.markdown("Enter your details below.")
 
 # Input for incomes and expenses
-income1 = st.number_input("Enter your post-tax income", min_value=0.0, value=0.0)
-income2 = st.number_input("Enter your partner's post-tax income", min_value=0.0, value=0.0)
+income1 = st.number_input("Enter your monthly post-tax income", min_value=0.0, value=0.0)
+income2 = st.number_input("Enter your partner's monthly post-tax income", min_value=0.0, value=0.0)
 expenses = st.number_input("Enter your average monthly expenses", min_value=0.0, value=0.0)
 
 # Store the radio button selection and calculations in session_state
