@@ -172,7 +172,7 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
             }
 
     # Display Expenses Table
-    df_expenses = pd.DataFrame(expenses_data, index=['Amount Paid of Joint Expenses', 'Percentage of Expenses', 'Personal Money'])
+    df_expenses = pd.DataFrame(expenses_data, index=['Amount paid of joint expenses', 'Percentage of income going to expenses', 'Personal money left'])
     st.table(df_expenses)
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
