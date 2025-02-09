@@ -206,6 +206,7 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
             }
 
     # Display the Expenses table with rows as You and Your Partner
+    st.markdown("### Expenses")
     df_expenses = pd.DataFrame(expenses_data, index=['You', 'Your Partner'])
     st.markdown(df_expenses.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
 
