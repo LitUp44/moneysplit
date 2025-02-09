@@ -7,9 +7,11 @@ st.markdown("""
         /* Style for alternating rows - 'You' and 'Your Partner' */
         .streamlit-table tbody tr:nth-child(odd) {
             background-color: #f5724b; /* Orange for "You" row */
+            color: #ffeae6; /* Text color for the "You" row */
         }
         .streamlit-table tbody tr:nth-child(even) {
             background-color: #8f4e52; /* Brown for "Your Partner" row */
+            color: #ffeae6; /* Text color for the "Your Partner" row */
         }
         
         /* Keep header row background color white */
@@ -24,6 +26,7 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 
