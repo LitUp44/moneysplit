@@ -101,7 +101,7 @@ if option == '50/50 split':
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option means that both individuals will equally split the total expenses. This method is simple and works best when both individuals have similar incomes.</p>
     """, unsafe_allow_html=True)
-    st.image("5050 option.png", width=700)  # Adjust image path as needed
+    st.image("5050 split.png", width=700)  # Adjust image path as needed
 
 elif option == 'Complete share':
     st.markdown("""
