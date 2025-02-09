@@ -3,33 +3,33 @@ import pandas as pd
 
 def calculate_percentage_earnings(income1, income2):
     total_income = income1 + income2
-    percent1 = (income1 / total_income) * 100
-    percent2 = (income2 / total_income) * 100
+    percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
+    percent2 = (income2 / total_income) * 100 if total_income > 0 else 0
     return percent1, percent2
 
 def calculate_50_50(expenses, income1, income2):
     share = expenses / 2
-    percent1 = (share / income1) * 100
-    percent2 = (share / income2) * 100
-    remaining1 = income1 - share
-    remaining2 = income2 - share
+    percent1 = (share / income1) * 100 if income1 > 0 else 0
+    percent2 = (share / income2) * 100 if income2 > 0 else 0
+    remaining1 = income1 - share if income1 > 0 else 0
+    remaining2 = income2 - share if income2 > 0 else 0
     return share, percent1, percent2, remaining1, remaining2
 
 def calculate_complete_share(expenses, income1, income2):
     total_income = income1 + income2
-    total_percent = (expenses / total_income) * 100
-    remaining = (total_income - expenses) / 2
+    total_percent = (expenses / total_income) * 100 if total_income > 0 else 0
+    remaining = (total_income - expenses) / 2 if total_income > 0 else 0
     return total_percent, remaining
 
 def calculate_proportional_expenses(expenses, income1, income2):
     total_income = income1 + income2
-    total_percent = (expenses / total_income) * 100
-    percent1 = (income1 / total_income) * 100
-    percent2 = (income2 / total_income) * 100
-    expense1 = (percent1 / 100 * expenses)
-    expense2 = (percent2 / 100 * expenses)
-    remaining1 = income1 - expense1
-    remaining2 = income2 - expense2
+    total_percent = (expenses / total_income) * 100 if total_income > 0 else 0
+    percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
+    percent2 = (income2 / total_income) * 100 if total_income > 0 else 0
+    expense1 = (percent1 / 100 * expenses) if total_income > 0 else 0
+    expense2 = (percent2 / 100 * expenses) if total_income > 0 else 0
+    remaining1 = income1 - expense1 if income1 > 0 else 0
+    remaining2 = income2 - expense2 if income2 > 0 else 0
     return percent1, percent2, remaining1, remaining2, expense1, expense2
 
 def calculate_split_by_bills(bills, income1, income2):
@@ -38,10 +38,10 @@ def calculate_split_by_bills(bills, income1, income2):
     bill_share1 = sum([bill[1] for bill in bills if bill[2] == 'Person 1'])
     bill_share2 = sum([bill[1] for bill in bills if bill[2] == 'Person 2'])
     total_bills = bill_share1 + bill_share2
-    percent1 = (bill_share1 / income1) * 100
-    percent2 = (bill_share2 / income2) * 100
-    remaining1 = income1 - bill_share1
-    remaining2 = income2 - bill_share2
+    percent1 = (bill_share1 / income1) * 100 if income1 > 0 else 0
+    percent2 = (bill_share2 / income2) * 100 if income2 > 0 else 0
+    remaining1 = income1 - bill_share1 if income1 > 0 else 0
+    remaining2 = income2 - bill_share2 if income2 > 0 else 0
     return percent1, percent2, remaining1, remaining2, bill_share1, bill_share2
 
 def app_header():
@@ -69,7 +69,16 @@ calculate_button = st.button("Calculate")
 if "calculated" not in st.session_state:
     st.session_state.calculated = False  # Track whether calculations were done
 
-# Radio buttons for split options
+# Radio buttons for split options (Horizontal Layout)
+st.markdown("""
+    <style>
+        .stRadio label {
+            display: inline-block;
+            margin-right: 15px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 option = st.radio("How would you like to split your expenses?", 
                   ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'), key="split_option")
 
@@ -79,14 +88,40 @@ if calculate_button:
 
 # Display explanatory text below the radio button selection
 explanatory_text = {
-    '50/50 split': "this is usually the first place that people start because before you’ve talked about it, it feels like the easiest thing to each pay for yourself. Usually this means you would put the same amount of money in a joint chequing account and use that for bills, date nights and vacations. It’s rare as you progress in a relationship that this is the right way forwards. It absolutely can be - if you both make enough money to afford the life you want and you don’t mind saving at different rates for the future. But this is rare, especially as life curcumstances change. (Ie. one person taking more time off to be with children, or taking a step back in their career.)",
-    'Complete share': "The recommendation here is that you fully record / aggregate each person’s income - you use your shared money to pay for your joint expenses, and then you transfer out exactly the same amount of money to your individual accounts to have for personal or ‘fun’ expenses. This is your no guilt, no stress, ‘you’ money.This is generally for partners that are married or have decided this is their ‘life partner’ because the partner who earns more needs to be comfortable that they will be dividing the excess they make with their partner. One way to think of it - if you chose to do life with this person, wouldn’t you want them to have the same opportunities as you?",
-    'Proportional expenses': "This means that you contribute to your life; expenses, bills, even children according to the amount you make but you also only get that same percentage of ‘fun’ money.So let’s say your partner earns 4,000 and you make 8,000 a month. After paying for all of your bills, savings, investments etc you have 1,000 / month to split for fun money, you would get $333 and they would get $667. This can make sense if you’re proud of your individual achievements and want your spending power to reflect that. One caution is that this can lead to resentment over time. Having unequal access to money in the long run can be tricky for a relationship.",
-    'Split by bills': "This is an interesting one that a lot of people fall into. They’ll start divvying up payments - one person pays for the utilities and car payments, the other the mortgage and the groceries. This can work if both people are happy with the arrangement and feel that the split is roughly appropriate according to their incomes or beliefs. The challenge is that both expenses and incomes change on a very consistent basis. This means that you can quickly end up with a situation that looks very different than the one you started with. It’s a lot of effort to be constantly renegotiating how you should be splitting everything up. There are of course varieties to each of these methods! You might do 50/50 generally but one partner pays more for rent, for example. OR you combine expenses fully but you contribute to investment / pension accounts at different rates. Whatever works for you - the important part is DECIDING together and not falling into a trap of just doing whatever is easiest at the time."
+    '50/50 split': "In this option, both of you will pay half of the total expenses.",
+    'Complete share': "In this option, both of you will contribute equally as a percentage of your income.",
+    'Proportional expenses': "Here, each person pays an amount proportional to their income.",
+    'Split by bills': "In this option, you enter your bills and assign them to either person."
 }
 
-# Display the appropriate explanatory text based on the selected radio button
-st.markdown(f"### Explanation: {explanatory_text[option]}")
+# Explanatory text with images and paragraphs
+if option == '50/50 split':
+    st.markdown("""
+        <h3 style='color: #f5724b;'>Explanation:</h3>
+        <p>This option means that both individuals will equally split the total expenses. This method is simple and works best when both individuals have similar incomes.</p>
+        <img src="https://via.placeholder.com/500" alt="50/50 Split Example" style="width:100%; height:auto;">
+    """, unsafe_allow_html=True)
+
+elif option == 'Complete share':
+    st.markdown("""
+        <h3 style='color: #f5724b;'>Explanation:</h3>
+        <p>This option means that both individuals will contribute an equal percentage of their income to cover the total expenses. It helps in situations where both individuals are making a similar income.</p>
+        <img src="https://via.placeholder.com/500" alt="Complete Share Example" style="width:100%; height:auto;">
+    """, unsafe_allow_html=True)
+
+elif option == 'Proportional expenses':
+    st.markdown("""
+        <h3 style='color: #f5724b;'>Explanation:</h3>
+        <p>In this option, each individual will contribute a percentage of their income based on their respective income. This ensures that both individuals contribute fairly according to their financial capacity.</p>
+        <img src="https://via.placeholder.com/500" alt="Proportional Expenses Example" style="width:100%; height:auto;">
+    """, unsafe_allow_html=True)
+
+elif option == 'Split by bills':
+    st.markdown("""
+        <h3 style='color: #f5724b;'>Explanation:</h3>
+        <p>This option allows individuals to input their individual bills and assign them to either person. It allows for more granular control over who is paying for what, especially in cases where expenses are split differently.</p>
+        <img src="https://via.placeholder.com/500" alt="Split by Bills Example" style="width:100%; height:auto;">
+    """, unsafe_allow_html=True)
 
 # Only proceed with calculations if the button is clicked and inputs are valid
 if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
@@ -148,6 +183,7 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
             st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share2:.2f}</span>.</p>", unsafe_allow_html=True)
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
+
 
 
 
