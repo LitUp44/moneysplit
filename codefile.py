@@ -150,7 +150,13 @@ elif option == 'Proportional expenses':
 elif option == 'Split by bills':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
-        <p>This is an interesting one that a lot of people fall into. They’ll start divvying up payments - one person pays for the utilities and car payments, the other the mortgage and the groceries. This can work if both people are happy with the arrangement and feel that the split is roughly appropriate according to their incomes or beliefs. The challenge is that both expenses and incomes change on a very consistent basis. This means that you can quickly end up with a situation that looks very different than the one you started with. It’s a lot of effort to be constantly renegotiating how you should be splitting everything up. There are of course varieties to each of these methods! You might do 50/50 generally but one partner pays more for rent, for example. OR you combine expenses fully but you contribute to investment / pension accounts at different rates. Whatever works for you - the important part is DECIDING together and not falling into a trap of just doing whatever is easiest at the time.</p>
+        <p>This is an interesting one that a lot of people fall into. They’ll start divvying up payments – one person pays for the <strong>utilities</strong> and car payments, the other the <strong>mortgage</strong> and the <strong>groceries</strong>. This can work if both people are happy with the arrangement and feel that the split is roughly appropriate according to their incomes or beliefs.</p>
+
+        <p>The challenge is that both <strong>expenses</strong> and <strong>incomes</strong> change on a very consistent basis. This means that you can quickly end up with a situation that looks very different than the one you started with. It’s a lot of effort to be constantly renegotiating how you should be splitting everything up.</p>
+
+        <p>There are of course varieties to each of these methods! You might do <strong>50/50</strong> generally but one partner pays more for <strong>rent</strong>, for example. OR you combine expenses fully but you contribute to <strong>investment</strong> / <strong>pension accounts</strong> at different rates.</p>
+
+        <p>Whatever works for you – the important part is <strong>DECIDING together</strong> and not falling into a trap of just doing whatever is easiest at the time.</p>
     """, unsafe_allow_html=True)
     st.image("Split by bills.png", width=700)  # Adjust image path as needed
 
