@@ -58,9 +58,9 @@ app_header()
 st.markdown("Use this tool to help you decide how to split your finances with your partner. Enter your details below.")
 
 # Input for incomes and expenses
-income1 = st.number_input("Enter your post-tax income", min_value=0.0, value=0.0)
-income2 = st.number_input("Enter your partner's post-tax income", min_value=0.0, value=0.0)
-expenses = st.number_input("Enter your average monthly expenses", min_value=0.0, value=0.0)
+income1 = st.number_input("Enter your post-tax monthly income", min_value=0.0, value=0.0)
+income2 = st.number_input("Enter your partner's post-tax monhtly income", min_value=0.0, value=0.0)
+expenses = st.number_input("Enter your joint average monthly expenses", min_value=0.0, value=0.0)
 
 # Calculate Button to trigger calculations and store the result
 calculate_button = st.button("Calculate")
@@ -75,6 +75,7 @@ st.markdown("""
         .stRadio label {
             display: inline-block;
             margin-right: 15px;
+            font-size: 16px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -99,28 +100,28 @@ if option == '50/50 split':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option means that both individuals will equally split the total expenses. This method is simple and works best when both individuals have similar incomes.</p>
-        <img src="https://via.placeholder.com/500" alt="50/50 Split Example" style="width:100%; height:auto;">
+        <img src="5050 option" alt="50/50 Split Example" style="width:100%; height:auto;">
     """, unsafe_allow_html=True)
 
 elif option == 'Complete share':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option means that both individuals will contribute an equal percentage of their income to cover the total expenses. It helps in situations where both individuals are making a similar income.</p>
-        <img src="https://via.placeholder.com/500" alt="Complete Share Example" style="width:100%; height:auto;">
+        <img src="Complete share" alt="Complete Share Example" style="width:100%; height:auto;">
     """, unsafe_allow_html=True)
 
 elif option == 'Proportional expenses':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>In this option, each individual will contribute a percentage of their income based on their respective income. This ensures that both individuals contribute fairly according to their financial capacity.</p>
-        <img src="https://via.placeholder.com/500" alt="Proportional Expenses Example" style="width:100%; height:auto;">
+        <img src="Proportional expenses" alt="Proportional Expenses Example" style="width:100%; height:auto;">
     """, unsafe_allow_html=True)
 
 elif option == 'Split by bills':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option allows individuals to input their individual bills and assign them to either person. It allows for more granular control over who is paying for what, especially in cases where expenses are split differently.</p>
-        <img src="https://via.placeholder.com/500" alt="Split by Bills Example" style="width:100%; height:auto;">
+        <img src="Split by bills" alt="Split by Bills Example" style="width:100%; height:auto;">
     """, unsafe_allow_html=True)
 
 # Only proceed with calculations if the button is clicked and inputs are valid
@@ -136,16 +137,6 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
     
     # Display the table
     st.table(df)
-
-    # Horizontal Radio Buttons using HTML and CSS
-    st.markdown("""
-        <style>
-            .stRadio label {
-                display: inline-block;
-                margin-right: 10px;
-            }
-        </style>
-    """, unsafe_allow_html=True)
 
     if option == '50/50 split':
         share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
@@ -183,6 +174,7 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
             st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share2:.2f}</span>.</p>", unsafe_allow_html=True)
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
+
 
 
 
