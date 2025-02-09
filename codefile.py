@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# Add this CSS style at the beginning of your Streamlit app (or just before the tables are rendered)
+# Custom CSS for table styling
 st.markdown("""
     <style>
         /* Style for alternating rows - 'You' and 'Your Partner' */
@@ -28,8 +28,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-
-
+# Function definitions (calculate_percentage_earnings, calculate_50_50, etc.) here...
 def calculate_percentage_earnings(income1, income2):
     total_income = income1 + income2
     percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
@@ -72,6 +71,7 @@ def calculate_split_by_bills(bills, income1, income2):
     remaining1 = income1 - bill_share1 if income1 > 0 else 0
     remaining2 = income2 - bill_share2 if income2 > 0 else 0
     return percent1, percent2, remaining1, remaining2, bill_share1, bill_share2
+
 
 
 def app_header():
@@ -170,24 +170,21 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
         share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
         expenses_data = {
             'Amount Paid of Joint Expenses': [f"${share:.2f}", f"${share:.2f}"],
-            'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"],
-            'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+            'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
         }
     
     elif option == 'Complete share':
         total_percent, remaining = calculate_complete_share(expenses, income1, income2)
         expenses_data = {
             'Amount Paid of Joint Expenses': [f"${remaining:.2f}", f"${remaining:.2f}"],
-            'Percentage of Income Going to Expenses': [f"{total_percent:.2f}%", f"{total_percent:.2f}%"],
-            'Personal Money': [f"${remaining:.2f}", f"${remaining:.2f}"]
+            'Percentage of Income Going to Expenses': [f"{total_percent:.2f}%", f"{total_percent:.2f}%"]
         }
     
     elif option == 'Proportional expenses':
         percent1, percent2, remaining1, remaining2, expense1, expense2 = calculate_proportional_expenses(expenses, income1, income2)
         expenses_data = {
             'Amount Paid of Joint Expenses': [f"${expense1:.2f}", f"${expense2:.2f}"],
-            'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"],
-            'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+            'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
         }
     
     elif option == 'Split by bills':
@@ -205,17 +202,38 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
             percent1, percent2, remaining1, remaining2, bill_share1, bill_share2 = calculate_split_by_bills(bills, income1, income2)
             expenses_data = {
                 'Amount Paid of Joint Expenses': [f"${bill_share1:.2f}", f"${bill_share2:.2f}"],
-                'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"],
-                'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+                'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
             }
 
-
-    
     # Display the Expenses table with rows as You and Your Partner
-    st.markdown("### Expenses")
     df_expenses = pd.DataFrame(expenses_data, index=['You', 'Your Partner'])
     st.markdown(df_expenses.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
 
+    # Personal Money Table (Third table under expenses)
+    st.markdown("### Personal Money")
+    if option == '50/50 split':
+        personal_money_data = {
+            'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+        }
+    
+    elif option == 'Complete share':
+        personal_money_data = {
+            'Personal Money': [f"${remaining:.2f}", f"${remaining:.2f}"]
+        }
+    
+    elif option == 'Proportional expenses':
+        personal_money_data = {
+            'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+        }
+    
+    elif option == 'Split by bills':
+        personal_money_data = {
+            'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+        }
+
+    # Display the Personal Money table with rows as You and Your Partner
+    df_personal_money = pd.DataFrame(personal_money_data, index=['You', 'Your Partner'])
+    st.markdown(df_personal_money.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
 
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
