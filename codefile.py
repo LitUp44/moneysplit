@@ -88,9 +88,9 @@ app_header()
 st.markdown("Use this tool to help you decide how to split your finances with your partner. Enter your details below.")
 
 # Input for incomes and expenses
-income1 = st.number_input("Enter your post-tax income", min_value=0.0, value=0.0)
-income2 = st.number_input("Enter your partner's post-tax income", min_value=0.0, value=0.0)
-expenses = st.number_input("Enter your average monthly expenses", min_value=0.0, value=0.0)
+income1 = st.number_input("Enter your monthly post-tax income", min_value=0.0, value=0.0)
+income2 = st.number_input("Enter your partner's monthly post-tax income", min_value=0.0, value=0.0)
+expenses = st.number_input("Enter your joint average monthly expenses", min_value=0.0, value=0.0)
 
 # Calculate Button to trigger calculations and store the result
 calculate_button = st.button("Calculate")
