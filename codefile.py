@@ -131,24 +131,28 @@ if option == '50/50 split':
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option means that both individuals will equally split the total expenses. This method is simple and works best when both individuals have similar incomes.</p>
     """, unsafe_allow_html=True)
+    st.image("5050 split.png", width=700)  # Adjust image path as needed
 
 elif option == 'Complete share':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option means that both individuals will contribute an equal percentage of their income to cover the total expenses. It helps in situations where both individuals are making a similar income.</p>
     """, unsafe_allow_html=True)
+    st.image("Complete share.png", width=700)  # Adjust image path as needed
 
 elif option == 'Proportional expenses':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>In this option, each individual will contribute a percentage of their income based on their respective income. This ensures that both individuals contribute fairly according to their financial capacity.</p>
     """, unsafe_allow_html=True)
+    st.image("Proportional expenses.png", width=700)  # Adjust image path as needed
 
 elif option == 'Split by bills':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option allows individuals to input their individual bills and assign them to either person. It allows for more granular control over who is paying for what, especially in cases where expenses are split differently.</p>
     """, unsafe_allow_html=True)
+    st.image("Split by bills.png", width=700)  # Adjust image path as needed
 
 # Always display the Income Table above the Expenses Table
 if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
