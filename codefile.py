@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+# Custom CSS for table styling
 st.markdown("""
     <style>
         .streamlit-table td:nth-child(even) {
@@ -17,48 +18,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-def calculate_percentage_earnings(income1, income2):
-    total_income = income1 + income2
-    percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
-    percent2 = (income2 / total_income) * 100 if total_income > 0 else 0
-    return percent1, percent2
+# Function definitions (calculate_percentage_earnings, calculate_50_50, etc.) here...
 
-def calculate_50_50(expenses, income1, income2):
-    share = expenses / 2
-    percent1 = (share / income1) * 100 if income1 > 0 else 0
-    percent2 = (share / income2) * 100 if income2 > 0 else 0
-    remaining1 = income1 - share if income1 > 0 else 0
-    remaining2 = income2 - share if income2 > 0 else 0
-    return share, percent1, percent2, remaining1, remaining2
-
-def calculate_complete_share(expenses, income1, income2):
-    total_income = income1 + income2
-    total_percent = (expenses / total_income) * 100 if total_income > 0 else 0
-    remaining = (total_income - expenses) / 2 if total_income > 0 else 0
-    return total_percent, remaining
-
-def calculate_proportional_expenses(expenses, income1, income2):
-    total_income = income1 + income2
-    total_percent = (expenses / total_income) * 100 if total_income > 0 else 0
-    percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
-    percent2 = (income2 / total_income) * 100 if total_income > 0 else 0
-    expense1 = (percent1 / 100 * expenses) if total_income > 0 else 0
-    expense2 = (percent2 / 100 * expenses) if total_income > 0 else 0
-    remaining1 = income1 - expense1 if income1 > 0 else 0
-    remaining2 = income2 - expense2 if income2 > 0 else 0
-    return percent1, percent2, remaining1, remaining2, expense1, expense2
-
-def calculate_split_by_bills(bills, income1, income2):
-    total_expenses = sum([bill[1] for bill in bills])
-    total_income = income1 + income2
-    bill_share1 = sum([bill[1] for bill in bills if bill[2] == 'Person 1'])
-    bill_share2 = sum([bill[1] for bill in bills if bill[2] == 'Person 2'])
-    total_bills = bill_share1 + bill_share2
-    percent1 = (bill_share1 / income1) * 100 if income1 > 0 else 0
-    percent2 = (bill_share2 / income2) * 100 if income2 > 0 else 0
-    remaining1 = income1 - bill_share1 if income1 > 0 else 0
-    remaining2 = income2 - bill_share2 if income2 > 0 else 0
-    return percent1, percent2, remaining1, remaining2, bill_share1, bill_share2
 
 def app_header():
     st.image("Aligned White.png", width=200)  # Adjust image path as needed
@@ -140,27 +101,18 @@ elif option == 'Split by bills':
 if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
     percent1, percent2 = calculate_percentage_earnings(income1, income2)
     
-# Income Table
-st.markdown("### Income")
-data = {
-    'Income': [f"${income1:.2f}", f"${income2:.2f}"],
-    '% of Total Income': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
-}
-df = pd.DataFrame(data, index=['You', 'Your Partner'])
+    # Income Table
+    st.markdown("### Income")
+    data = {
+        'Income': [f"${income1:.2f}", f"${income2:.2f}"],
+        '% of Total Income': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
+    }
+    df = pd.DataFrame(data, index=['You', 'Your Partner'])
 
-# Apply the custom CSS class to the table
-st.markdown(df.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
+    # Apply the custom CSS class to the table
+    st.markdown(df.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
 
-
-# Expenses Table
-st.markdown("### Expenses")
-df_expenses = pd.DataFrame(expenses_data, index=['You', 'Your Partner'])
-
-# Apply the custom CSS class to the table
-st.markdown(df_expenses.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
-
-    
-    # Define the columns for the Expenses table
+    # Define expenses_data before using it, based on the selected option
     if option == '50/50 split':
         share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
         expenses_data = {
@@ -206,9 +158,11 @@ st.markdown(df_expenses.to_html(classes='streamlit-table', index=True, header=Tr
 
     # Display the Expenses table with rows as You and Your Partner
     df_expenses = pd.DataFrame(expenses_data, index=['You', 'Your Partner'])
-    st.table(df_expenses)
+    st.markdown(df_expenses.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
+
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
+
 
 
 
