@@ -187,22 +187,22 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
     if option == '50/50 split':
         share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
         expenses_data = {
-            'Amount Paid of Joint Expenses': [f"${share:.2f}", f"${share:.2f}"],
-            'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
+            'Amount paid of joint expenses': [f"${share:.2f}", f"${share:.2f}"],
+            'Percentage of income going to expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
         }
     
     elif option == 'Complete share':
         total_percent, remaining, percent1, percent2 = calculate_complete_share(expenses, income1, income2)
         expenses_data = {
-            'Amount Paid of Joint Expenses': [f"${remaining:.2f}", f"${remaining:.2f}"],
-            'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
+            'Amount paid of joint expenses': [f"${remaining:.2f}", f"${remaining:.2f}"],
+            'Percentage of income going to expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
         }
     
     elif option == 'Proportional expenses':
         percent1, percent2, remaining1, remaining2, expense1, expense2 = calculate_proportional_expenses(expenses, income1, income2)
         expenses_data = {
-            'Amount Paid of Joint Expenses': [f"${expense1:.2f}", f"${expense2:.2f}"],
-            'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
+            'Amount paid of joint expenses': [f"${expense1:.2f}", f"${expense2:.2f}"],
+            'Percentage of income going to expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
         }
     
     elif option == 'Split by bills':
@@ -219,35 +219,35 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
         if bills:
             percent1, percent2, remaining1, remaining2, bill_share1, bill_share2 = calculate_split_by_bills(bills, income1, income2)
             expenses_data = {
-                'Amount Paid of Joint Expenses': [f"${bill_share1:.2f}", f"${bill_share2:.2f}"],
-                'Percentage of Income Going to Expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
+                'Amount paid of joint expenses': [f"${bill_share1:.2f}", f"${bill_share2:.2f}"],
+                'Percentage of income going to expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
             }
 
     # Display the Expenses table with rows as You and Your Partner
     st.markdown("### Expenses")
-    df_expenses = pd.DataFrame(expenses_data, index=['You', 'Your Partner'])
+    df_expenses = pd.DataFrame(expenses_data, index=['You', 'Your partner'])
     st.markdown(df_expenses.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
 
     # Personal Money Table (Third table under expenses)
-    st.markdown("### Personal Money")
+    st.markdown("### Personal money left over")
     if option == '50/50 split':
         personal_money_data = {
-            'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+            'Personal money left over': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
         }
     
     elif option == 'Complete share':
         personal_money_data = {
-            'Personal Money': [f"${remaining:.2f}", f"${remaining:.2f}"]
+            'Personal money left over': [f"${remaining:.2f}", f"${remaining:.2f}"]
         }
     
     elif option == 'Proportional expenses':
         personal_money_data = {
-            'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+            'Personal money left over': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
         }
     
     elif option == 'Split by bills':
         personal_money_data = {
-            'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
+            'Personal money left over': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
         }
 
     # Display the Personal Money table with rows as You and Your Partner
