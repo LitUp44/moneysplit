@@ -153,7 +153,7 @@ elif option == 'Proportional expenses':
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This means that you contribute to your life – <strong>expenses</strong>, <strong>bills</strong>, even <strong>children</strong> – according to the amount you make but you also only get that same percentage of ‘<strong>fun</strong>’ money.</p>
 
-        <p>So let’s say your partner earns 4,000 and you make 8,000 a month. After paying for all of your <strong>bills</strong>, <strong>savings</strong>, <strong>investments</strong>, etc., you have 1,000 / month to split for fun money. You would get $333 and they would get $667. This can make sense if you’re proud of your individual achievements and want your spending power to reflect that.</p>
+        <p>So let’s say your partner earns 4,000 and you make 8,000 a month. After paying for all of your <strong>bills</strong>, <strong>savings</strong>, <strong>investments</strong>, etc., you have 1,000 / month to split for fun money. You would get $666 and they would get $337. This can make sense if you’re proud of your individual achievements and want your spending power to reflect that.</p>
 
         <p>One caution is that this can lead to resentment over time. Having unequal access to money in the long run can be tricky for a relationship.</p>
     """, unsafe_allow_html=True)
