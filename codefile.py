@@ -111,7 +111,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 option = st.radio("How would you like to split your expenses?", 
-                  ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'), key="split_option")
+                  ('50/50 split', 'Complete share', 'Proportional expenses', 'Split by bills'), key="split_option",  horizontal=True)
 
 # Update session state on calculate button click
 if calculate_button:
