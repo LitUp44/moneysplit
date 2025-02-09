@@ -129,21 +129,31 @@ explanatory_text = {
 if option == '50/50 split':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
-        <p>This option means that both individuals will equally split the total expenses. This method is simple and works best when both individuals have similar incomes.</p>
+        <p>This is usually the first place that people start because before you’ve talked about it, it feels like the easiest thing to each pay for yourself. Usually, this means you would put the same amount of money in a <strong>joint chequing account</strong> and use that for <strong>bills</strong>, <strong>date nights</strong>, and <strong>vacations</strong>.</p>
+
+        <p>It’s rare as you progress in a relationship that this is the right way forwards. It absolutely can be – if you both make enough money to afford the life you want and you don’t mind saving at different rates for the future. But this is rare, especially as <strong>life circumstances</strong> change. (Ie. one person taking more time off to be with children, or taking a step back in their career.)</p>
     """, unsafe_allow_html=True)
     st.image("5050 split.png", width=700)  # Adjust image path as needed
 
 elif option == 'Complete share':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
-        <p>This option means that both individuals will contribute an equal percentage of their income to cover the total expenses. It helps in situations where both individuals are making a similar income.</p>
+        <p>The recommendation here is that you fully record / aggregate each person’s <strong>income</strong> – you use your shared money to pay for your <strong>joint expenses</strong>, and then you transfer out exactly the same amount of money to your individual accounts to have for personal or ‘<strong>fun</strong>’ expenses.</p>
+
+        <p>This is your <strong>no guilt, no stress</strong>, ‘you’ money. This is generally for partners that are married or have decided this is their ‘life partner’ because the partner who earns more needs to be comfortable that they will be dividing the excess they make with their partner.</p>
+
+        <p>One way to think of it – if you chose to do life with this person, wouldn’t you want them to have the same opportunities as you?</p>
     """, unsafe_allow_html=True)
     st.image("Complete share.png", width=700)  # Adjust image path as needed
 
 elif option == 'Proportional expenses':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
-        <p>In this option, each individual will contribute a percentage of their income based on their respective income. This ensures that both individuals contribute fairly according to their financial capacity.</p>
+        <p>This means that you contribute to your life – <strong>expenses</strong>, <strong>bills</strong>, even <strong>children</strong> – according to the amount you make but you also only get that same percentage of ‘<strong>fun</strong>’ money.</p>
+
+        <p>So let’s say your partner earns 4,000 and you make 8,000 a month. After paying for all of your <strong>bills</strong>, <strong>savings</strong>, <strong>investments</strong>, etc., you have 1,000 / month to split for fun money. You would get $333 and they would get $667. This can make sense if you’re proud of your individual achievements and want your spending power to reflect that.</p>
+
+        <p>One caution is that this can lead to resentment over time. Having unequal access to money in the long run can be tricky for a relationship.</p>
     """, unsafe_allow_html=True)
     st.image("Proportional expenses.png", width=700)  # Adjust image path as needed
 
