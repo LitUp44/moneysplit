@@ -58,8 +58,8 @@ app_header()
 st.markdown("Use this tool to help you decide how to split your finances with your partner. Enter your details below.")
 
 # Input for incomes and expenses
-income1 = st.number_input("Enter your post-tax monthly income", min_value=0.0, value=0.0)
-income2 = st.number_input("Enter your partner's post-tax monhtly income", min_value=0.0, value=0.0)
+income1 = st.number_input("Enter your monthly post-tax income", min_value=0.0, value=0.0)
+income2 = st.number_input("Enter your partner's monhtly post-tax income", min_value=0.0, value=0.0)
 expenses = st.number_input("Enter your joint average monthly expenses", min_value=0.0, value=0.0)
 
 # Calculate Button to trigger calculations and store the result
@@ -107,58 +107,58 @@ elif option == 'Complete share':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option means that both individuals will contribute an equal percentage of their income to cover the total expenses. It helps in situations where both individuals are making a similar income.</p>
-        <img src="Complete share" alt="Complete Share Example" style="width:100%; height:auto;">
     """, unsafe_allow_html=True)
+    st.image("Complete share.png", width=700)  # Adjust image path as needed
 
 elif option == 'Proportional expenses':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>In this option, each individual will contribute a percentage of their income based on their respective income. This ensures that both individuals contribute fairly according to their financial capacity.</p>
-        <img src="Proportional expenses" alt="Proportional Expenses Example" style="width:100%; height:auto;">
     """, unsafe_allow_html=True)
+    st.image("Proportional expenses.png", width=700)  # Adjust image path as needed
 
 elif option == 'Split by bills':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>This option allows individuals to input their individual bills and assign them to either person. It allows for more granular control over who is paying for what, especially in cases where expenses are split differently.</p>
-        <img src="Split by bills" alt="Split by Bills Example" style="width:100%; height:auto;">
     """, unsafe_allow_html=True)
+    st.image("Split by bills.png", width=700)  # Adjust image path as needed
 
-# Only proceed with calculations if the button is clicked and inputs are valid
+# Always display the Income Table above the Expenses Table
 if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
     percent1, percent2 = calculate_percentage_earnings(income1, income2)
     
-    # Create a formatted table for income and percentage
+    # Income Table
+    st.markdown("### Income")
     data = {
         'You': [f"${income1:.2f}", f"{percent1:.2f}%"],
         'Your Partner': [f"${income2:.2f}", f"{percent2:.2f}%"]
     }
     df = pd.DataFrame(data, index=['Income', '% of Total Income'])
-    
-    # Display the table
     st.table(df)
 
+    # Expenses Table
+    st.markdown("### Expenses")
     if option == '50/50 split':
         share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
-        st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: ${share:.2f}</h3>", unsafe_allow_html=True)
-        st.markdown(f"<p><strong>Person 1</strong> pays <span style='color: #228b22;'>{percent1:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining1:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
-        st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after expenses.</p>", unsafe_allow_html=True)
-
+        expenses_data = {
+            'You': [f"${share:.2f}", f"{percent1:.2f}%"],
+            'Your Partner': [f"${share:.2f}", f"{percent2:.2f}%"]
+        }
     elif option == 'Complete share':
         total_percent, remaining = calculate_complete_share(expenses, income1, income2)
-        st.markdown(f"<h3 style='color: #f5724b;'>Each person pays: {total_percent:.2f}% of their income for all expenses.</h3>", unsafe_allow_html=True)
-        st.markdown(f"<p>You each have <span style='color: #228b22;'>${remaining:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
-
+        expenses_data = {
+            'You': [f"${remaining:.2f}", f"{total_percent:.2f}%"],
+            'Your Partner': [f"${remaining:.2f}", f"{total_percent:.2f}%"]
+        }
     elif option == 'Proportional expenses':
         percent1, percent2, remaining1, remaining2, expense1, expense2 = calculate_proportional_expenses(expenses, income1, income2)
-        st.markdown(f"<h3 style='color: #f5724b;'>You pay: {percent1:.2f}% of the expenses, ${expense1:.2f}</h3>", unsafe_allow_html=True)
-        st.markdown(f"<h3 style='color: #f5724b;'>Your partner pays: {percent2:.2f}% of the expenses, ${expense2:.2f}</h3>", unsafe_allow_html=True)
-        st.markdown(f"<p><strong>Person 1</strong> has <span style='color: #228b22;'>${remaining1:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
-        st.markdown(f"<p><strong>Person 2</strong> has <span style='color: #228b22;'>${remaining2:.2f}</span> left after expenses.</p>", unsafe_allow_html=True)
-
+        expenses_data = {
+            'You': [f"${expense1:.2f}", f"{percent1:.2f}%"],
+            'Your Partner': [f"${expense2:.2f}", f"{percent2:.2f}%"]
+        }
     elif option == 'Split by bills':
-        # Collect bills input from the user
-        st.write("Enter the bills you want to split.")
+        st.write("Please fill in the bills to calculate the expenses table.")
         bills = []
         num_bills = st.number_input("How many bills do you want to enter?", min_value=1, step=1)
 
@@ -170,10 +170,17 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
 
         if bills:
             percent1, percent2, remaining1, remaining2, bill_share1, bill_share2 = calculate_split_by_bills(bills, income1, income2)
-            st.markdown(f"<p><strong>Person 1</strong> pays <span style='color: #228b22;'>{percent1:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining1:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share1:.2f}</span>.</p>", unsafe_allow_html=True)
-            st.markdown(f"<p><strong>Person 2</strong> pays <span style='color: #228b22;'>{percent2:.2f}%</span> of their income for bills, leaving <span style='color: #228b22;'>${remaining2:.2f}</span> after bills. They pay a total of <span style='color: #f5724b;'>${bill_share2:.2f}</span>.</p>", unsafe_allow_html=True)
+            expenses_data = {
+                'You': [f"${bill_share1:.2f}", f"{percent1:.2f}%"],
+                'Your Partner': [f"${bill_share2:.2f}", f"{percent2:.2f}%"]
+            }
+
+    # Display Expenses Table
+    df_expenses = pd.DataFrame(expenses_data, index=['Amount Paid of Joint Expenses', 'Personal Money'])
+    st.table(df_expenses)
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
+
 
 
 
