@@ -1,21 +1,30 @@
 import streamlit as st
 import pandas as pd
 
-# Custom CSS for table styling
+# Add this CSS style at the beginning of your Streamlit app (or just before the tables are rendered)
 st.markdown("""
     <style>
-        .streamlit-table td:nth-child(even) {
-            background-color: #f5724b;
+        /* Style for alternating rows - 'You' and 'Your Partner' */
+        .streamlit-table tbody tr:nth-child(odd) {
+            background-color: #f5724b; /* Orange for "You" row */
         }
-        .streamlit-table td:nth-child(odd) {
-            background-color: #8f4e52;
+        .streamlit-table tbody tr:nth-child(even) {
+            background-color: #8f4e52; /* Brown for "Your Partner" row */
         }
+        
+        /* Keep header row background color white */
         .streamlit-table th {
-            background-color: #f5724b;
-            color: white;
+            background-color: white;
+            color: black;
+        }
+        
+        /* Style for table columns */
+        .streamlit-table td, .streamlit-table th {
+            padding: 10px;
         }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 def calculate_percentage_earnings(income1, income2):
@@ -197,9 +206,12 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
                 'Personal Money': [f"${remaining1:.2f}", f"${remaining2:.2f}"]
             }
 
+
+    
     # Display the Expenses table with rows as You and Your Partner
     df_expenses = pd.DataFrame(expenses_data, index=['You', 'Your Partner'])
     st.markdown(df_expenses.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
+
 
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
