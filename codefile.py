@@ -1,6 +1,22 @@
 import streamlit as st
 import pandas as pd
 
+st.markdown("""
+    <style>
+        .streamlit-table td:nth-child(even) {
+            background-color: #f5724b;
+        }
+        .streamlit-table td:nth-child(odd) {
+            background-color: #8f4e52;
+        }
+        .streamlit-table th {
+            background-color: #f5724b;
+            color: white;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+
 def calculate_percentage_earnings(income1, income2):
     total_income = income1 + income2
     percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
@@ -124,17 +140,25 @@ elif option == 'Split by bills':
 if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
     percent1, percent2 = calculate_percentage_earnings(income1, income2)
     
-    # Income Table
-    st.markdown("### Income")
-    data = {
-        'Income': [f"${income1:.2f}", f"${income2:.2f}"],
-        '% of Total Income': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
-    }
-    df = pd.DataFrame(data, index=['You', 'Your Partner'])
-    st.table(df)
+# Income Table
+st.markdown("### Income")
+data = {
+    'Income': [f"${income1:.2f}", f"${income2:.2f}"],
+    '% of Total Income': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
+}
+df = pd.DataFrame(data, index=['You', 'Your Partner'])
 
-    # Expenses Table
-    st.markdown("### Expenses")
+# Apply the custom CSS class to the table
+st.markdown(df.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
+
+
+# Expenses Table
+st.markdown("### Expenses")
+df_expenses = pd.DataFrame(expenses_data, index=['You', 'Your Partner'])
+
+# Apply the custom CSS class to the table
+st.markdown(df_expenses.to_html(classes='streamlit-table', index=True, header=True, escape=False), unsafe_allow_html=True)
+
     
     # Define the columns for the Expenses table
     if option == '50/50 split':
