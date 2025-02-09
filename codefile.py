@@ -140,34 +140,34 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
     if option == '50/50 split':
         share, percent1, percent2, remaining1, remaining2 = calculate_50_50(expenses, income1, income2)
         expenses_data = {
-            ('You', 'Amount Paid of Joint Expenses'): [f"${share:.2f}"],
-            ('You', 'Percentage of Income Going to Expenses'): [f"{percent1:.2f}%"],
-            ('You', 'Personal Money'): [f"${remaining1:.2f}"],
-            ('Your Partner', 'Amount Paid of Joint Expenses'): [f"${share:.2f}"],
-            ('Your Partner', 'Percentage of Income Going to Expenses'): [f"{percent2:.2f}%"],
-            ('Your Partner', 'Personal Money'): [f"${remaining2:.2f}"]
+            ('Amount Paid of Joint Expenses', 'You'): [f"${share:.2f}"],
+            ('Percentage of Income Going to Expenses', 'You'): [f"{percent1:.2f}%"],
+            ('Personal Money', 'You'): [f"${remaining1:.2f}"],
+            ('Amount Paid of Joint Expenses', 'Your Partner'): [f"${share:.2f}"],
+            ('Percentage of Income Going to Expenses', 'Your Partner'): [f"{percent2:.2f}%"],
+            ('Personal Money', 'Your Partner'): [f"${remaining2:.2f}"]
         }
     
     elif option == 'Complete share':
         total_percent, remaining = calculate_complete_share(expenses, income1, income2)
         expenses_data = {
-            ('You', 'Amount Paid of Joint Expenses'): [f"${remaining:.2f}"],
-            ('You', 'Percentage of Income Going to Expenses'): [f"{total_percent:.2f}%"],
-            ('You', 'Personal Money'): [f"${remaining:.2f}"],
-            ('Your Partner', 'Amount Paid of Joint Expenses'): [f"${remaining:.2f}"],
-            ('Your Partner', 'Percentage of Income Going to Expenses'): [f"{total_percent:.2f}%"],
-            ('Your Partner', 'Personal Money'): [f"${remaining:.2f}"]
+            ('Amount Paid of Joint Expenses', 'You'): [f"${remaining:.2f}"],
+            ('Percentage of Income Going to Expenses', 'You'): [f"{total_percent:.2f}%"],
+            ('Personal Money', 'You'): [f"${remaining:.2f}"],
+            ('Amount Paid of Joint Expenses', 'Your Partner'): [f"${remaining:.2f}"],
+            ('Percentage of Income Going to Expenses', 'Your Partner'): [f"{total_percent:.2f}%"],
+            ('Personal Money', 'Your Partner'): [f"${remaining:.2f}"]
         }
     
     elif option == 'Proportional expenses':
         percent1, percent2, remaining1, remaining2, expense1, expense2 = calculate_proportional_expenses(expenses, income1, income2)
         expenses_data = {
-            ('You', 'Amount Paid of Joint Expenses'): [f"${expense1:.2f}"],
-            ('You', 'Percentage of Income Going to Expenses'): [f"{percent1:.2f}%"],
-            ('You', 'Personal Money'): [f"${remaining1:.2f}"],
-            ('Your Partner', 'Amount Paid of Joint Expenses'): [f"${expense2:.2f}"],
-            ('Your Partner', 'Percentage of Income Going to Expenses'): [f"{percent2:.2f}%"],
-            ('Your Partner', 'Personal Money'): [f"${remaining2:.2f}"]
+            ('Amount Paid of Joint Expenses', 'You'): [f"${expense1:.2f}"],
+            ('Percentage of Income Going to Expenses', 'You'): [f"{percent1:.2f}%"],
+            ('Personal Money', 'You'): [f"${remaining1:.2f}"],
+            ('Amount Paid of Joint Expenses', 'Your Partner'): [f"${expense2:.2f}"],
+            ('Percentage of Income Going to Expenses', 'Your Partner'): [f"{percent2:.2f}%"],
+            ('Personal Money', 'Your Partner'): [f"${remaining2:.2f}"]
         }
     
     elif option == 'Split by bills':
@@ -184,20 +184,29 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
         if bills:
             percent1, percent2, remaining1, remaining2, bill_share1, bill_share2 = calculate_split_by_bills(bills, income1, income2)
             expenses_data = {
-                ('You', 'Amount Paid of Joint Expenses'): [f"${bill_share1:.2f}"],
-                ('You', 'Percentage of Income Going to Expenses'): [f"{percent1:.2f}%"],
-                ('You', 'Personal Money'): [f"${remaining1:.2f}"],
-                ('Your Partner', 'Amount Paid of Joint Expenses'): [f"${bill_share2:.2f}"],
-                ('Your Partner', 'Percentage of Income Going to Expenses'): [f"{percent2:.2f}%"],
-                ('Your Partner', 'Personal Money'): [f"${remaining2:.2f}"]
+                ('Amount Paid of Joint Expenses', 'You'): [f"${bill_share1:.2f}"],
+                ('Percentage of Income Going to Expenses', 'You'): [f"{percent1:.2f}%"],
+                ('Personal Money', 'You'): [f"${remaining1:.2f}"],
+                ('Amount Paid of Joint Expenses', 'Your Partner'): [f"${bill_share2:.2f}"],
+                ('Percentage of Income Going to Expenses', 'Your Partner'): [f"{percent2:.2f}%"],
+                ('Personal Money', 'Your Partner'): [f"${remaining2:.2f}"]
             }
 
-    # Display Expenses Table with Multi-index columns
-    df_expenses = pd.DataFrame(expenses_data)
-    df_expenses.columns = pd.MultiIndex.from_tuples(df_expenses.columns, names=["", "You", "Your Partner"])
+    # Create the MultiIndex columns
+    columns = pd.MultiIndex.from_tuples([('Amount Paid of Joint Expenses', 'You'),
+                                         ('Percentage of Income Going to Expenses', 'You'),
+                                         ('Personal Money', 'You'),
+                                         ('Amount Paid of Joint Expenses', 'Your Partner'),
+                                         ('Percentage of Income Going to Expenses', 'Your Partner'),
+                                         ('Personal Money', 'Your Partner')],
+                                        names=["Expense Details", "Person"])
+
+    # Display the Expenses table with MultiIndex columns
+    df_expenses = pd.DataFrame(expenses_data, columns=columns)
     st.table(df_expenses)
 else:
     st.warning("Please fill in all fields and click 'Calculate' to see the results.")
+
 
 
 
