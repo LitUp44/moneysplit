@@ -140,7 +140,7 @@ if option == '50/50 split':
 elif option == 'Complete share':
     st.markdown("""
         <h3 style='color: #f5724b;'>Explanation:</h3>
-        <p>The recommendation here is that you fully record / aggregate each person’s <strong>income</strong> – you use your shared money to pay for your <strong>joint expenses</strong>, and then you transfer out exactly the same amount of money to your individual accounts to have for personal or ‘<strong>fun</strong>’ expenses.</p>
+        <p>With the complete share option, the idea is to fully combine your income in a joint account which you then use to pay for your <strong>joint expenses</strong>. After these have all been paid and money has been saved & invested, you would then transfer out exactly the same amount of money to your individual accounts to have for personal or ‘fun’ money.</p>
 
         <p>This is your <strong>no guilt, no stress</strong>, ‘you’ money. This is generally for partners that are married or have decided this is their ‘life partner’ because the partner who earns more needs to be comfortable that they will be dividing the excess they make with their partner.</p>
 
