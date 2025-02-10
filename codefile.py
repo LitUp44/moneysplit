@@ -56,15 +56,15 @@ def calculate_complete_share(expenses, income1, income2):
 def calculate_proportional_expenses(expenses, income1, income2):
     total_income = income1 + income2
     total_percent = (expenses / total_income) * 100 if total_income > 0 else 0
-    percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
-    percent2 = (income2 / total_income) * 100 if total_income > 0 else 0
-    expense1 = (percent1 / 100 * expenses) if total_income > 0 else 0
-    expense2 = (percent2 / 100 * expenses) if total_income > 0 else 0
-    share_bills1 = (expense1 / income1) * 100 if total_income > 0 else 0
-    share_bills2 = (expense2 / income2) * 100 if total_income > 0 else 0
-    remaining1 = income1 - expense1 if income1 > 0 else 0
-    remaining2 = income2 - expense2 if income2 > 0 else 0
-    return percent1, percent2, remaining1, remaining2, expense1, expense2, share_bills1, share_bills2
+    #percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
+    #percent2 = (income2 / total_income) * 100 if total_income > 0 else 0
+    #expense1 = (percent1 / 100 * expenses) if total_income > 0 else 0
+    #expense2 = (percent2 / 100 * expenses) if total_income > 0 else 0
+    share_bills1 = (total_percent/100*income1) if total_income > 0 else 0
+    share_bills2 = (total_percent/100*income2) * 100 if total_income > 0 else 0
+    remaining1 = income1 - share_bills1 if income1 > 0 else 0
+    remaining2 = income2 - share_bills2 if income2 > 0 else 0
+    return total_percent, percent1, percent2, remaining1, remaining2, expense1, expense2, share_bills1, share_bills2
 
 def calculate_split_by_bills(bills, income1, income2):
     total_expenses = sum([bill[1] for bill in bills])
@@ -203,10 +203,10 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
         }
     
     elif option == 'Proportional expenses':
-        percent1, percent2, remaining1, remaining2, expense1, expense2, share_bills1, share_bills2 = calculate_proportional_expenses(expenses, income1, income2)
+        total_percent, percent1, percent2, remaining1, remaining2, expense1, expense2, share_bills1, share_bills2 = calculate_proportional_expenses(expenses, income1, income2)
         expenses_data = {
             'Amount paid of joint expenses': [f"${share_bills1:.2f}", f"${share_bills2:.2f}"],
-            'Percentage of income going to expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
+            'Percentage of income going to expenses': [f"{total_percent:.2f}%", f"{total_percent:.2f}%"]
         }
     
     elif option == 'Split by bills':
