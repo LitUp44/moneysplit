@@ -61,7 +61,7 @@ def calculate_proportional_expenses(expenses, income1, income2):
     #expense1 = (percent1 / 100 * expenses) if total_income > 0 else 0
     #expense2 = (percent2 / 100 * expenses) if total_income > 0 else 0
     share_bills1 = (total_percent/100*income1) if total_income > 0 else 0
-    share_bills2 = (total_percent/100*income2) * 100 if total_income > 0 else 0
+    share_bills2 = (total_percent/100*income2) if total_income > 0 else 0
     remaining1 = income1 - share_bills1 if income1 > 0 else 0
     remaining2 = income2 - share_bills2 if income2 > 0 else 0
     return total_percent, remaining1, remaining2, share_bills1, share_bills2
