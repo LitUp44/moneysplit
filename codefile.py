@@ -45,13 +45,13 @@ def calculate_50_50(expenses, income1, income2):
 
 def calculate_complete_share(expenses, income1, income2):
     total_income = income1 + income2
-    percent1 = (expenses / income1) * 100 if income1 > 0 else 0
-    percent2 = (expenses / income2) * 100 if income2 > 0 else 0
     total_percent = (expenses / total_income) * 100 if total_income > 0 else 0
-    paid1 = (expenses*percent1/100) if income1 > 0 else 0
-    paid2 = (expenses*percent2/100) if income2 > 0 else 0
+    percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
+    percent2 = (income2 / total_income) * 100 if total_income > 0 else 0
+    expense1 = (percent1 / 100 * expenses) if total_income > 0 else 0
+    expense2 = (percent2 / 100 * expenses) if total_income > 0 else 0
     remaining = (total_income - expenses) / 2 if total_income > 0 else 0
-    return total_percent, remaining, percent1, percent2, paid1, paid2
+    return total_percent, remaining, percent1, percent2, expense1, expense2
 
 def calculate_proportional_expenses(expenses, income1, income2):
     total_income = income1 + income2
@@ -194,10 +194,10 @@ if st.session_state.calculated and income1 > 0 and income2 > 0 and expenses > 0:
         }
     
     elif option == 'Complete share':
-        total_percent, remaining, percent1, percent2, paid1, paid2 = calculate_complete_share(expenses, income1, income2)
+        total_percent, remaining, percent1, percent2, expense1, expense2 = calculate_complete_share(expenses, income1, income2)
         expenses_data = {
-            'Amount paid of joint expenses': [f"${paid1:.2f}", f"${paid2:.2f}"],
-            'Percentage of income going to expenses': [f"{percent1:.2f}%", f"{percent2:.2f}%"]
+            'Amount paid of joint expenses': [f"${expense1:.2f}", f"${expense2:.2f}"],
+            'Percentage of income going to expenses': [f"{total_percent:.2f}%", f"{total_percent:.2f}%"]
         }
     
     elif option == 'Proportional expenses':
