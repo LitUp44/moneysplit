@@ -142,7 +142,7 @@ elif option == 'Complete share':
         <h3 style='color: #f5724b;'>Explanation:</h3>
         <p>With the complete share option, the idea is to fully combine your income in a joint account which you then use to pay for your <strong>joint expenses</strong>. After these have all been paid and money has been saved & invested, you would then transfer out exactly the same amount of money to your individual accounts to have for personal or ‘fun’ money.</p>
 
-        <p>This is your <strong>no guilt, no stress, you</strong> money. This is generally for partners that are married or have decided this is their life partner because the partner who earns more needs to be comfortable that they will be dividing the excess they make with their partner.</p>
+        <p>This is your <strong>no guilt, no stress, you</strong> money. This is generally for couples that are married or have decided this is their life partner because the partner who earns more needs to be comfortable that they will be dividing the excess that they make.</p>
 
         <p>One way to think of it – if you chose to do life with this person, wouldn’t you want them to have the same opportunities as you?</p>
     """, unsafe_allow_html=True)
