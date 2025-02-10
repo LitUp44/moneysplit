@@ -48,8 +48,8 @@ def calculate_complete_share(expenses, income1, income2):
     percent1 = (expenses / income1) * 100 if income1 > 0 else 0
     percent2 = (expenses / income2) * 100 if income2 > 0 else 0
     total_percent = (expenses / total_income) * 100 if total_income > 0 else 0
-    paid1 = income1 - (income1*percent1/100) if income1 > 0 else 0
-    paid2 = income2 - (income2*percent2/100) if income2 > 0 else 0
+    paid1 = income1 - (expenses*percent1/100) if income1 > 0 else 0
+    paid2 = income2 - (expenses*percent2/100) if income2 > 0 else 0
     remaining = (total_income - expenses) / 2 if total_income > 0 else 0
     return total_percent, remaining, percent1, percent2, paid1, paid2
 
