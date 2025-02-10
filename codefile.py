@@ -56,10 +56,10 @@ def calculate_complete_share(expenses, income1, income2):
 def calculate_proportional_expenses(expenses, income1, income2):
     total_income = income1 + income2
     total_percent = (expenses / total_income) * 100 if total_income > 0 else 0
-    percent1 = (income1 / total_income) * 100 if total_income > 0 else 0
-    percent2 = (income2 / total_income) * 100 if total_income > 0 else 0
     expense1 = (percent1 / 100 * expenses) if total_income > 0 else 0
     expense2 = (percent2 / 100 * expenses) if total_income > 0 else 0
+    percent1 = (expense1 / income1) * 100 if total_income > 0 else 0
+    percent2 = (expense2 / income2) * 100 if total_income > 0 else 0
     remaining1 = income1 - expense1 if income1 > 0 else 0
     remaining2 = income2 - expense2 if income2 > 0 else 0
     return percent1, percent2, remaining1, remaining2, expense1, expense2
